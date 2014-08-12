@@ -16,12 +16,20 @@ conn.on('ready', function(data){
 
   ws.on('message', function(data, flags) {
     console.log('MESSAGE', data);
+    data = JSON.parse(data);
+    if(data.geo.region == "AZ") {
+      var color = "#0000FF"
+    } else if(data.geo.country == "US"){
+      var color = "#00FF00"
+    } else {
+      var color = "#FF0000"
+    }
     conn.message({
       "devices": "feadee3e-7cb5-4fb5-93bd-1bcdba8de1c5",
       "subdevice": "blink1",
       "payload": {
         "on":true,
-        "rgb":"#00FF00"
+        "rgb": color
       }
     });
 
@@ -30,8 +38,7 @@ conn.on('ready', function(data){
         "devices": "feadee3e-7cb5-4fb5-93bd-1bcdba8de1c5",
         "subdevice": "blink1",
         "payload": {
-          "on":false,
-          "rgb":"#00FF00"
+          "on":false
         }
       });
     },500);
